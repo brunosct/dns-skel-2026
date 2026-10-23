@@ -1,0 +1,6 @@
+server 192.168.20.10
+zone starwars.lan
+update delete darthmaul.starwars.lan
+update add darthmaul.starwars.lan 3600 A 192.0.2.51
+send
+show

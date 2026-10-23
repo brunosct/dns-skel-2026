@@ -1,0 +1,9 @@
+//
+// Do any local configuration here
+//
+
+
+zone "imperio.starwars.lan" {
+	type primary;
+    file "zonas/db.imperio.starwars.lan";
+};

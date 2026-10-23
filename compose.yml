@@ -1,0 +1,59 @@
+services:
+  mandalorian:
+    build: docker/dnsserver
+    hostname: mandalorian
+    networks: 
+      rededns:
+        ipv4_address: 192.168.20.9
+    volumes:
+      - ./mandalorian/named.conf.options:/etc/bind/named.conf.options
+  darthvader:
+    build: docker/dnsserver
+    hostname: darthvader
+    command: ["-f","-4"]
+    networks: 
+      rededns:
+        ipv4_address: 192.168.20.10  
+    volumes:
+      - ./darthvader/named.conf.local:/etc/bind/named.conf.local
+      - ./darthvader/named.conf.options:/etc/bind/named.conf.options
+      - ./darthvader/zonas:/var/cache/bind/zonas
+      - ./logs:/logs
+  darthsidious:
+    build: docker/dnsserver
+    hostname: darthsidious
+    networks: 
+      rededns:
+        ipv4_address: 192.168.20.11  
+    volumes:
+      - ./darthsidious/named.conf.local:/etc/bind/named.conf.local
+  delegado:
+    build: docker/dnsserver
+    hostname: delegado
+    networks: 
+      rededns:
+        ipv4_address: 192.168.20.15
+    volumes:
+      - ./delegado/named.conf.local:/etc/bind/named.conf.local
+      - ./delegado/zonas:/var/cache/bind/zonas          
+  cliente:
+    build: docker/cliente
+    hostname: cliente
+    networks:
+      rededns:
+        ipv4_address: 192.168.20.110
+    dns:
+      - 192.168.20.10
+    dns_search: starwars.lan
+    dns_opt:
+      - ndots:1
+    volumes:
+      - ./cliente/rndc.conf:/etc/bind/rndc.conf
+      - ./cliente/chave.key:/dns/chave.key
+      - ./cliente/actualiza.txt:/dns/actualiza.txt
+
+networks:
+  rededns:
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24

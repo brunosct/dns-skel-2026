@@ -1,0 +1,14 @@
+$TTL    86400
+@       IN      SOA     darthvader.galaxia.lan. admin.galaxia.lan. (
+                        5  ; Número de serie
+                        3600        ; Actualización (Refresh)
+                        1800        ; Reintento (Retry)
+                        1209600     ; Caducidade (Expire)
+                        86400 )     ; TTL mínimo
+
+; Servidores de nomes
+@       IN      NS      darthvader.galaxia.lan.
+
+; Rexistros A dos servidores de nomes
+darthvader          IN      A       192.168.20.10
+yarua               IN      A       192.168.20.238

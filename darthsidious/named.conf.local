@@ -1,0 +1,23 @@
+//
+// Do any local configuration here
+//
+key "chave-starwars" {
+        algorithm hmac-sha256;
+        secret "8/yEo2jPPaRhQjZtBSkr+EsEwGVfEYcbWQ3ylo67wA4=";
+};
+
+server 192.168.20.10 {
+    keys { "chave-starwars"; };
+};
+
+zone "starwars.lan" {
+	type secondary;
+    file "db.starwars.lan";
+    primaries { 192.168.20.10;};
+};
+
+zone "20.168.192.in-addr.arpa" {
+	type secondary;
+    file "db.192";
+    primaries { 192.168.20.10;};
+};

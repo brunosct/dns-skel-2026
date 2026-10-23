@@ -1,0 +1,30 @@
+//
+// Do any local configuration here
+//
+
+key "chave-starwars" {
+        algorithm hmac-sha256;
+        secret "8/yEo2jPPaRhQjZtBSkr+EsEwGVfEYcbWQ3ylo67wA4=";
+};
+
+zone "starwars.lan" {
+	type primary;
+    file "zonas/db.starwars.lan";
+    allow-transfer {key "chave-starwars";};
+    allow-update {key "chave-starwars";};
+};
+
+zone "20.168.192.in-addr.arpa" {
+	type primary;
+    file "zonas/db.192";
+    allow-transfer {key "chave-starwars";};
+    allow-update {key "chave-starwars";};
+};
+
+
+include "/etc/bind/rndc.key";
+controls {
+    inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };
+
+    inet 192.168.20.10 port 953 allow  {192.168.20.110;} keys { "chave-starwars";};
+};

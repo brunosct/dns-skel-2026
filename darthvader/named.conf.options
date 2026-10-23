@@ -1,0 +1,18 @@
+logging {
+    channel query.log {
+        file "/logs/query.log";
+        // Set the severity to dynamic to see all the debug messages.
+        severity dynamic;
+    };
+	category queries { query.log; };
+     category default { default_syslog; default_debug; };
+     category unmatched { null; };	
+};
+
+
+
+options {
+	directory "/var/cache/bind";
+	allow-new-zones yes;
+};
+
